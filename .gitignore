@@ -10,7 +10,7 @@ dist
 
 ### Vuejs ###
 # Recommended template: Node.gitignore
-
+.output/
 node_modules/
 dist/
 npm-debug.log
