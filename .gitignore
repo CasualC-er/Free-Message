@@ -18,5 +18,6 @@ yarn-error.log
 
 ### General ###
 .env
+.vscode
 
 # End of https://www.toptal.com/developers/gitignore/api/nuxtjs,vuejs
