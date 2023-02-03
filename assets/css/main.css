@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.a {
+    filter: none;
+}
+
+.Header {
+    background: rgb(4, 165, 170);
+    text-align: center;
+    font-size: large;
+    color: white;
+}
