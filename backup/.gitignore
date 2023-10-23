@@ -1,0 +1,25 @@
+# Created by https://www.toptal.com/developers/gitignore/api/nuxtjs,vuejs
+# Edit at https://www.toptal.com/developers/gitignore?templates=nuxtjs,vuejs
+
+### Nuxtjs ###
+# Nuxt build
+.nuxt
+
+# Nuxt generate
+dist
+
+### Vuejs ###
+# Recommended template: Node.gitignore
+.output/
+node_modules/
+dist/
+npm-debug.log
+yarn-error.log
+
+### General ###
+.env
+.vscode
+
+# End of https://www.toptal.com/developers/gitignore/api/nuxtjs,vuejs
+data/
+*.sqlite3
