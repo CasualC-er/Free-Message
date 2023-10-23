@@ -1,9 +1,1 @@
-{
-  "users": [
-    {
-      "username": "admin",
-      "password": "$2a$10$lpEcu/NYfP9IcM.2qvc.e.Cwl7AIAotqCWLCyQJDaRvigSp5g4FVW",
-      "salt": "$2a$10$lpEcu/NYfP9IcM.2qvc.e."
-    }
-  ]
-}
+{}

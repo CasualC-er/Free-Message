@@ -58,19 +58,16 @@ import db from "../data/db.json";
 export default {
   data() {
     return {
-      username: "",
-      password: "",
+      login: {
+        username: "",
+        password: "",
+      },
     };
   },
   methods: {
-    authenticate() {
-      const user = db.users.find((u) => u.username == this.username) || "";
-      let passHash = bcrypt.hashSync(this.password, user.salt);
-      if (passHash == user.password) {
-        this.$router.push("/home");
-      } else {
-        alert("Go suck an egg, Todd!");
-      }
+    async authenticate() {
+      let a = await $fetch("/api/count");
+      console.log(a);
     },
     register() {
       const user = db.users.find((u) => u.username == this.username) || "";
