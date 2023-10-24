@@ -54,7 +54,10 @@
 
 <script>
 import bcrypt from "bcryptjs";
+<<<<<<< HEAD
+=======
 import db from "../data/db.json";
+>>>>>>> 7a80560413de5dae6676f9cb28a50a679ab222a3
 export default {
   data() {
     return {
