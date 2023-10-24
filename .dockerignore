@@ -1,29 +1,3 @@
-<<<<<<< HEAD
-# Nuxt dev/build outputs
-.output
-.data
-.nuxt
-.nitro
-.cache
-dist
-
-# Node dependencies
-node_modules
-
-# Logs
-logs
-*.log
-
-# Misc
-.DS_Store
-.fleet
-.idea
-
-# Local env files
-.env
-.env.*
-!.env.example
-=======
 # Created by https://www.toptal.com/developers/gitignore/api/nuxtjs,vuejs
 # Edit at https://www.toptal.com/developers/gitignore?templates=nuxtjs,vuejs
 
@@ -47,4 +21,3 @@ yarn-error.log
 .vscode
 
 # End of https://www.toptal.com/developers/gitignore/api/nuxtjs,vuejs
->>>>>>> 7a80560413de5dae6676f9cb28a50a679ab222a3
