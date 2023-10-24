@@ -44,6 +44,6 @@ yarn-error.log
 .env
 .vscode
 
-# End of https://www.toptal.com/developers/gitignore/api/nuxtjs,vuejs
-data/*.sqlite3
+
+*.sqlite3
 package-lock.json
