@@ -40,7 +40,7 @@
       <div class="md:flex md:items-center">
         <div class="md:w-1/3"></div>
         <div class="md:w-2/3">
-          <button @click="authenticate" class="btn btn-blue" type="button">
+          <button @click="countGet" class="btn btn-blue" type="button">
             Login
           </button>
           <button @click="register" class="btn btn-blue" type="button">
@@ -53,41 +53,38 @@
 </template>
 
 <script>
-import bcrypt from "bcryptjs";
-<<<<<<< HEAD
-=======
-import db from "../data/db.json";
->>>>>>> 7a80560413de5dae6676f9cb28a50a679ab222a3
 export default {
   data() {
     return {
-      login: {
-        username: "",
-        password: "",
-      },
+      username: "",
+      password: "",
     };
   },
   methods: {
-    async authenticate() {
-      let a = await $fetch("/api/count");
-      console.log(a);
-    },
-    register() {
-      const user = db.users.find((u) => u.username == this.username) || "";
-      if (user !== "") {
-        alert(
-          "An account with that username already exists; Pick another one."
-        );
-        return;
+    authenticate() {
+      console.log("AHhhhh");
+      console.log();
+      console.log(this.username);
+      if (
+        this.username.length > 100 ||
+        this.username === "" ||
+        this.username.replace(/[^a-zA-Z0-9\s]+/g, "") !== this.username
+      ) {
+        alert("Invalid Username");
+      } else {
+        navigateTo("/home");
       }
-      const salt = bcrypt.genSaltSync();
-      const salted = bcrypt.hashSync(this.password, salt);
-      db.users.push({
-        username: this.username,
-        password: salted,
-        salt: salt,
+    },
+    register() {},
+    async countGet() {
+      console.log("GGG");
+      let response = await $fetch("/api/count", {
+        method: "GET",
+        // body: {
+        //   text: "gfdg",
+        // },
       });
-      alert("Sign Up Successful");
+      console.log(response);
     },
   },
 };
