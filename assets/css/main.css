@@ -19,6 +19,10 @@
 .btn-blue {
   @apply bg-blue-500 text-white;
 }
-.btn-blue:hover {
+.btn-blue:not(.disabled):hover {
   @apply bg-blue-700;
+}
+.btn-blue:disabled {
+  cursor: not-allowed;
+  @apply bg-blue-500;
 }

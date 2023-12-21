@@ -40,72 +40,53 @@
       <div class="md:flex md:items-center">
         <div class="md:w-1/3"></div>
         <div class="md:w-2/3">
-          <button
-            @click.prevent="authenticate"
-            class="btn btn-blue"
-            type="button"
-          >
-            Login
+          <button @click="register" class="btn btn-blue" type="button">
+            Register
           </button>
         </div>
-      </div>
-      <div class="flex align-center">
-        <h1>or</h1>
-        <button
-          :disabled="loading"
-          @click.prevent="register"
-          class="btn btn-blue"
-          type="button"
-        >
-          Sign Up
-        </button>
       </div>
     </form>
   </div>
 </template>
-
 <script>
 export default {
   data() {
     return {
       username: "",
       password: "",
+      email: "",
     };
   },
   methods: {
-    async authenticate() {
-      this.loading = true;
-      setTimeout(() => {}, 1000);
+    async register() {
       if (
         this.username.length > 100 ||
         this.username === "" ||
-        this.username.replace(/[^a-zA-Z0-9\s]+/g, "") !== this.username ||
-        this.password === "" ||
-        this.password.length > 64
+        this.username.replace(/[^a-zA-Z0-9\s]+/g, "") !== this.username
       ) {
-        alert("Invalid Username or Password");
-      } else {
-        let response = await $fetch("/api/auth/login", {
+        alert("Invalid Username");
+      } else if (
+        this.password.length < 12 ||
+        this.password === "" ||
+        this.username.replace(/[^a-zA-Z0-9\s]+/g, "") !== this.username
+      ) {
+        alert(
+          "Invalid Password: Password must contian only letters and numbers and be at least 12 charchters long"
+        );
+      }else if(this.email){} 
+      else {
+        let response = $fetch("/api/auth/register", {
           method: "POST",
           body: { username: this.username, password: this.password },
         });
         if (response.status === 200) {
-          navigateTo("/home");
+          alert("User Made");
+          navigateTo("/");
         } else if (response.status >= 400 && response.status < 500) {
           alert(response.responseBody);
         }
       }
-      this.loading = false;
-    },
-    register() {
-      navigateTo("/register");
-    },
-    async countGet() {
-      let response = await $fetch("/api/count", { method: "GET" });
-      console.log(response);
     },
   },
 };
 </script>
-
-<style scoped></style>
