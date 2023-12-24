@@ -83,7 +83,7 @@ export default {
     async register() {
       this.loading = true;
       const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-      /*if (
+      if (
         this.username.length > 100 ||
         this.username === "" ||
         this.username.replace(/[^a-zA-Z0-9\s]+/g, "") !== this.username
@@ -99,22 +99,22 @@ export default {
         );
       } else if (!emailPattern.test(this.email)) {
         alert("Ivalid email addres");
-      } else {*/
-      let response = $fetch("/api/auth/register", {
-        method: "POST",
-        body: {
-          username: this.username,
-          password: this.password,
-          email: this.email,
-        },
-      });
-      if (response.status === 200) {
-        alert("User Made");
-        navigateTo("/");
-      } else if (response.status >= 400 && response.status < 500) {
-        alert(response.responseBody);
+      } else {
+        let response = $fetch("/api/auth/register", {
+          method: "POST",
+          body: {
+            username: this.username,
+            password: this.password,
+            email: this.email,
+          },
+        });
+        if (response.status === 200) {
+          alert("User Made");
+          navigateTo("/");
+        } else if (response.status >= 400 && response.status < 500) {
+          alert(response.responseBody);
+        }
       }
-      //}
       this.loading = false;
     },
   },
