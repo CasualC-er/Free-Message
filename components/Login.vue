@@ -1,5 +1,5 @@
 <template>
-  <div id="login">
+  <div v-if="!loading" id="login">
     <form class="w-full max-w-sm">
       <div class="md:flex md:items-center mb-6">
         <div class="md:w-1/3">
@@ -41,6 +41,7 @@
         <div class="md:w-1/3"></div>
         <div class="md:w-2/3">
           <button
+            :disabled="loading"
             @click.prevent="authenticate"
             class="btn btn-blue"
             type="button"
@@ -51,17 +52,13 @@
       </div>
       <div class="flex align-center">
         <h1>or</h1>
-        <button
-          :disabled="loading"
-          @click.prevent="register"
-          class="btn btn-blue"
-          type="button"
-        >
+        <button @click.prevent="register" class="btn btn-blue" type="button">
           Sign Up
         </button>
       </div>
     </form>
   </div>
+  <div v-if="loading"><div class="loader"></div></div>
 </template>
 
 <script>
@@ -70,12 +67,12 @@ export default {
     return {
       username: "",
       password: "",
+      loading: false,
     };
   },
   methods: {
     async authenticate() {
       this.loading = true;
-      setTimeout(() => {}, 1000);
       if (
         this.username.length > 100 ||
         this.username === "" ||
@@ -108,4 +105,22 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>

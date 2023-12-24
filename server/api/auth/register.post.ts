@@ -23,5 +23,12 @@ export default defineEventHandler(async (event) => {
       "INSERT INTO users (username, password, salt, email) VALUES (?, ?, ?, ?)"
     );
     stmt.run(body.username, hashed_password, salt, body.email);
-  } catch {}
+  } catch {
+    return {
+      status: 500,
+      responseBody:
+        "Some error occured. I couldn't be bothered to check it at time of coding.",
+    };
+  }
+  return { status: 200 };
 });
