@@ -20,5 +20,6 @@ export default defineEventHandler(async (event) => {
   if (user.password !== hashed_password) {
     return { status: 400, responseBody: "Passwords do not match" };
   }
+  event.context.session = { username: user.username, verified: true };
   return { status: 200, responseBody: "" };
 });

@@ -82,6 +82,7 @@ export default {
   methods: {
     async register() {
       this.loading = true;
+      console.log(`i am ${this.loading ? "yes" : "not"} loading`);
       const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
       if (
         this.username.length > 100 ||
@@ -100,7 +101,7 @@ export default {
       } else if (!emailPattern.test(this.email)) {
         alert("Ivalid email addres");
       } else {
-        let response = $fetch("/api/auth/register", {
+        let response = await $fetch("/api/auth/register", {
           method: "POST",
           body: {
             username: this.username,
@@ -108,6 +109,7 @@ export default {
             email: this.email,
           },
         });
+        console.log(response.status);
         if (response.status === 200) {
           alert("User Made");
           navigateTo("/");
