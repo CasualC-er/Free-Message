@@ -72,6 +72,8 @@ export default {
   },
   methods: {
     async authenticate() {
+      const { session, update } = await useSession();
+      await update({ username: this.username, access: false, userid: -1 });
       this.loading = true;
       if (
         this.username.length > 100 ||
@@ -87,6 +89,11 @@ export default {
           body: { username: this.username, password: this.password },
         });
         if (response.status === 200) {
+          await update({
+            username: response.user.username,
+            userid: response.user.id,
+            access: true,
+          });
           navigateTo("/home");
         } else if (response.status >= 400 && response.status < 500) {
           alert(response.responseBody);

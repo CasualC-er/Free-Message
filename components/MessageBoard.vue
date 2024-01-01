@@ -48,7 +48,7 @@ export default {
       }
     },
     async postMessage() {
-      const { session, refresh, reset, remove, update } = await useSession();
+      const { session } = await useSession();
       const timestamp = this.formatTimestamp(Date());
       const newPost = {
         id: this.messages.length + 1,
@@ -56,7 +56,15 @@ export default {
         body: this.new_message,
         timestamp: timestamp,
       };
-
+      await $fetch("/api/board/messages", {
+        method: "POST",
+        body: {
+          userid: session.value.userid,
+          username: session.value.username,
+          body: this.new_message,
+          timestamp: timestamp,
+        },
+      });
       this.messages.push(newPost);
       this.newMessage = "";
     },
