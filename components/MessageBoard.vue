@@ -1,3 +1,15 @@
+<script setup>
+const { session, update } = await useSession();
+if (!session.value) {
+  await update({
+    username: "",
+    userid: -1,
+    access: false,
+  });
+}
+let username = session.value["username"];
+console.log(username);
+</script>
 <template>
   <div>
     <h1>Communal Board</h1>
@@ -7,6 +19,13 @@
         <div class="message-container">
           <span class="body">{{ message.body }}</span>
           <span class="timestamp">{{ message.timestamp }}</span>
+          <button
+            class="delete-button"
+            v-if="username === message.username || username === 'admin'"
+            @click="deleteMessage(message.id)"
+          >
+            Delete
+          </button>
         </div>
       </li>
     </ul>
@@ -35,18 +54,11 @@ export default {
       ],
     };
   },
-  created() {
-    this.fetchMessages();
+  async mounted() {
+    const response = await $fetch("/api/board/messages");
+    this.messages = response;
   },
   methods: {
-    async fetchMessages() {
-      try {
-        const response = await $fetch("/api/board/messages");
-        this.messages = response;
-      } catch (error) {
-        console.error("Error fetching messages:", error);
-      }
-    },
     async postMessage() {
       const { session } = await useSession();
       const timestamp = this.formatTimestamp(Date());
@@ -67,6 +79,15 @@ export default {
       });
       this.messages.push(newPost);
       this.newMessage = "";
+    },
+    async deleteMessage(id) {
+      await $fetch("/api/board/messages", {
+        method: "DELETE",
+        body: {
+          message_id: id,
+        },
+      });
+      this.messages = this.messages.filter((message) => message.id !== id);
     },
     formatTimestamp(timestamp) {
       const options = {
@@ -97,6 +118,23 @@ button {
   color: #fff;
   border: none;
   cursor: pointer;
+}
+.delete-button {
+  background-color: #ff0000; /* Red background */
+  color: white; /* White text */
+  border: none; /* No border */
+  padding: 5px 10px; /* Some padding */
+  text-align: center; /* Centered text */
+  text-decoration: none; /* No underline */
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer; /* Mouse pointer on hover */
+  border-radius: 4px; /* Rounded corners */
+}
+
+.delete-button:hover {
+  background-color: #cc0000; /* Darker red when hovered */
 }
 .message-container {
   display: flex;

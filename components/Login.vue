@@ -1,3 +1,4 @@
+<script setup></script>
 <template>
   <div v-if="!loading" id="login">
     <form class="w-full max-w-sm">
@@ -72,8 +73,7 @@ export default {
   },
   methods: {
     async authenticate() {
-      const { session, update } = await useSession();
-      await update({ username: this.username, access: false, userid: -1 });
+      const { update } = await useSession();
       this.loading = true;
       if (
         this.username.length > 100 ||
