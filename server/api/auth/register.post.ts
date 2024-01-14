@@ -1,5 +1,5 @@
 import Database from "better-sqlite3";
-import bycrypt from "bcryptjs";
+import { sha256, sha224 } from "js-sha256";
 const db = new Database("data/freemessages.sqlite3");
 
 export default defineEventHandler(async (event) => {
@@ -16,8 +16,8 @@ export default defineEventHandler(async (event) => {
       responseBody: "Failed to register user: Username taken.",
     };
   }
-  let salt = bycrypt.genSaltSync(16);
-  let hashed_password = bycrypt.hashSync(body.password, salt);
+  let salt = sha256(body.username);
+  let hashed_password = sha256(`${body.password}${salt}`);
   try {
     const stmt = db.prepare(
       "INSERT INTO users (username, password, salt, email) VALUES (?, ?, ?, ?)"

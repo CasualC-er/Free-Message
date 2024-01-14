@@ -1,5 +1,6 @@
 import Database from "better-sqlite3";
-import bcrypt from "bcryptjs";
+import { sha256 } from "js-sha256";
+
 const db = new Database("data/freemessages.sqlite3");
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -16,7 +17,7 @@ export default defineEventHandler(async (event) => {
   }
 
   let salt = user.salt;
-  let hashed_password = bcrypt.hashSync(body.password, salt);
+  let hashed_password = sha256(`${body.password}${salt}`);
 
   if (user.password !== hashed_password) {
     return { status: 400, responseBody: "Passwords do not match" };

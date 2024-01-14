@@ -91,7 +91,7 @@ export default {
       ) {
         alert("Invalid Username");
       } else if (
-        this.password.length < 8 ||
+        this.password.length < 4 ||
         this.password === "" ||
         this.username.replace(/[^a-zA-Z0-9\s]+/g, "") !== this.username
       ) {
