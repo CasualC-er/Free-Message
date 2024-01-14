@@ -4,11 +4,12 @@ const db = new Database("data/freemessages.sqlite3");
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   let user;
-  // TODO: handle the sql errors
   try {
     let users: any = db.prepare("SELECT * FROM users WHERE username = ?;");
     user = users.get(body.username);
-  } catch {}
+  } catch (err) {
+    console.error("ERR: ", err);
+  }
 
   if (!user) {
     return { status: 404, responseBody: "Could not find user" };

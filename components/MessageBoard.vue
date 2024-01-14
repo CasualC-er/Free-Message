@@ -17,8 +17,11 @@ console.log(username);
       <li v-for="message in messages" :key="message.id">
         <span class="username">{{ message.username }}:</span>
         <div class="message-container">
-          <span class="body">{{ message.body }}</span>
-          <span class="timestamp">{{ message.timestamp }}</span>
+          <div class="message-content">
+            <span class="body">{{ message.body }}</span>
+            <span class="timestamp">{{ message.timestamp }}</span>
+          </div>
+
           <button
             class="delete-button"
             v-if="username === message.username || username === 'admin'"
@@ -34,6 +37,7 @@ console.log(username);
     <textarea v-model="new_message" placeholder="Type your message"></textarea>
     <button @click="postMessage">Post Message</button>
   </div>
+  <button @click="refresh_messages">Refresh</button>
 </template>
 
 <script>
@@ -102,6 +106,10 @@ export default {
 
       return new Date(timestamp).toLocaleString("en-US", options);
     },
+    async refresh_messages() {
+      const response = await $fetch("/api/board/messages");
+      this.messages = response;
+    },
   },
 };
 </script>
@@ -131,6 +139,8 @@ button {
   margin: 4px 2px;
   cursor: pointer; /* Mouse pointer on hover */
   border-radius: 4px; /* Rounded corners */
+  order: 2;
+  margin-left: auto;
 }
 
 .delete-button:hover {
@@ -138,8 +148,14 @@ button {
 }
 .message-container {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: flex-end;
 }
+.message-content {
+  width: calc(100% - 50px);
+}
+
 body {
   font-family: "Inter", sans-serif;
 }
@@ -152,6 +168,7 @@ li {
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #f5f5f5;
+  word-wrap: break-word;
 }
 
 /* Style the username */
@@ -175,9 +192,7 @@ li {
   color: #888;
 }
 .message-form {
-  .message-form {
-    display: flex;
-    margin-bottom: 20px;
-  }
+  display: flex;
+  margin-bottom: 20px;
 }
 </style>

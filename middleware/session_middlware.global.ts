@@ -9,6 +9,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       if (!session || !session.value?.access) {
         return navigateTo("/");
       }
+      navigateTo(to);
     }
   }
 });
