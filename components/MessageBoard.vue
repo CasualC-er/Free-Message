@@ -17,11 +17,27 @@ console.log(username);
       <li v-for="message in messages" :key="message.id">
         <span class="username">{{ message.username }}:</span>
         <div class="message-container">
-          <div class="message-content">
+          <div v-if="!editing" class="message-content">
             <span class="body">{{ message.body }}</span>
             <span class="timestamp">{{ message.timestamp }}</span>
           </div>
-
+          <button
+            class="edit-button"
+            v-if="username === message.username && !editing"
+            @click="open_edit_area()"
+          >
+            Edit
+          </button>
+          <div
+            v-if="username === message.username && editing"
+            class="message-form"
+          >
+            <textarea
+              v-model="extra_message"
+              placeholder="Enter new text"
+            ></textarea>
+            <button @click="edit_message(message)">Post Message</button>
+          </div>
           <button
             class="delete-button"
             v-if="username === message.username || username === 'admin'"
@@ -46,6 +62,8 @@ export default {
     return {
       messages: [],
       new_message: "",
+      editing: false,
+      extra_message: "",
     };
   },
   head() {
@@ -110,6 +128,19 @@ export default {
       const response = await $fetch("/api/board/messages");
       this.messages = response;
     },
+    open_edit_area() {
+      this.editing = true;
+    },
+    async edit_message(message) {
+      await $fetch("/api/board/messages", {
+        method: "PATCH",
+        body: { edit: this.extra_message, message_id: message.id },
+      });
+      this.editing = false;
+      const response = await $fetch("/api/board/messages");
+      this.messages = response;
+      this.extra_message = "";
+    },
   },
 };
 </script>
@@ -160,7 +191,6 @@ body {
   font-family: "Inter", sans-serif;
 }
 
-/* Style the list items */
 li {
   list-style-type: none;
   margin: 10px 0;
@@ -171,20 +201,32 @@ li {
   word-wrap: break-word;
 }
 
-/* Style the username */
 .username {
   font-weight: bold;
   color: #3498db; /* or any color of your choice */
 }
 
-/* Style the message body */
+.edit-button {
+  padding: 10px;
+  background-color: #3498db; /* Blue background */
+  color: #fff; /* White text */
+  border: none; /* No border */
+  cursor: pointer; /* Mouse pointer on hover */
+  border-radius: 4px; /* Rounded corners */
+  order: 2;
+  margin-left: auto;
+}
+
+.edit-button:hover {
+  background-color: #2980b9; /* Darker blue when hovered */
+}
+
 .body {
   margin-left: 2vw;
   margin-top: 5px;
   color: #333;
 }
 
-/* Style the timestamp */
 .timestamp {
   margin-top: 1vw;
   margin-left: auto;
