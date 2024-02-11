@@ -2,5 +2,9 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
-  modules: ["@nuxtjs/tailwindcss", "@sidebase/nuxt-session"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@sidebase/nuxt-session",
+    "@nuxt/test-utils/module",
+  ],
 });

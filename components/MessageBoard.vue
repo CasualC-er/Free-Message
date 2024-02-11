@@ -49,9 +49,14 @@ console.log(username);
       </li>
     </ul>
   </div>
-  <div class="message-form">
-    <textarea v-model="new_message" placeholder="Type your message"></textarea>
-    <button @click="postMessage">Post Message</button>
+  <div>
+    <div class="message-form">
+      <textarea
+        v-model="new_message"
+        placeholder="Type your message"
+      ></textarea>
+      <button @click="postMessage">Post Message</button>
+    </div>
   </div>
   <button @click="refresh_messages">Refresh</button>
 </template>
@@ -127,6 +132,7 @@ export default {
     async refresh_messages() {
       const response = await $fetch("/api/board/messages");
       this.messages = response;
+      this.has_access();
     },
     open_edit_area() {
       this.editing = true;
